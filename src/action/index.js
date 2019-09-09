@@ -8,19 +8,11 @@ export const alimentaRedux = (data) => {
     }
 }
 
-export const atualizaId = (id) => {
+export const atualizaNome = (id,nome) => {
     return {
         type: 'ATUALIZA_NOME',
-        payload: {
-            id: id
-        }
-    }
-};
-
-export const atualizaNome = (nome) => {
-    return {
-        type: 'ATUALIZA_NOME',
-        payload: {
+        payload: {            
+            id: id,
             nome: nome
         }
     }

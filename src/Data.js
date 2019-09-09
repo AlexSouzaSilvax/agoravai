@@ -2,9 +2,7 @@ import React from "react";
 import {
     View,
     Text,
-    TextInput,
-    FlatList,
-    TouchableHighlight
+    TextInput
 } from "react-native";
 
 import { connect } from 'react-redux'
@@ -27,14 +25,18 @@ class Data extends React.Component {
         this.props.alimentaRedux(data);
     }
 
-    atualizaId(id) {
-        console.log('ID: ' + id);
-        this.props.atualizaNome(id);
-    }
-
     atualizaNome(nome) {
         console.log('Nome: ' + nome);
-        this.props.atualizaNome(nome);
+        const id = this.props.all[0].id;
+        console.log('ID: ', id);
+        this.props.atualizaNome(id, nome);
+    }
+
+    atualizaId(id) {
+        console.log('ID: ' + id);
+        const nome = this.props.all[0].nome;
+        console.log('NOME: ', nome);
+        this.props.atualizaNome(id, nome);
     }
 
     async componentDidMount() {
@@ -52,10 +54,10 @@ class Data extends React.Component {
 
         const carros = this.props.all.map(i => (
             <View>
-                <Text key={i.id}>{i.id} - {i.nome}</Text>
+                <Text key={i.id}>ID: {i.id} - NOME: {i.nome}</Text>
 
                 <TextInput style={{ borderWidth: 1, borderColor: 'black', width: 300 }}
-                    onChangeText={this.atualizaid}
+                    onChangeText={this.atualizaId}
                     value={i.id} />
 
                 <TextInput style={{ borderWidth: 1, borderColor: 'black', width: 300 }}

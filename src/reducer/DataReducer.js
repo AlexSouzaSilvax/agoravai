@@ -20,7 +20,7 @@ export default function (state = INITIAL_STATE, action) {
                     cor: action.payload.nome,
                     ano: action.payload.nome,
                     fabricante: action.payload.nome,
-                    valor: action.payload.nome
+                    valor: action.payload.nome,
                 }]
             }
         default:
