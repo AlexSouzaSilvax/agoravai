@@ -8,21 +8,11 @@ export const alimentaRedux = (data) => {
     }
 }
 
-export const atualizaNome = (id,nome) => {
+export const itemSelecionado = (item) => {
     return {
-        type: 'ATUALIZA_NOME',
+        type: 'ITEM_SELECIONADO',
         payload: {            
-            id: id,
-            nome: nome
-        }
-    }
-};
-
-export const buscaItem = (id) => {
-    return {
-        type: 'BUSCA_ITEM',
-        payload: {            
-            id: id            
+            item: item
         }
     }
 };

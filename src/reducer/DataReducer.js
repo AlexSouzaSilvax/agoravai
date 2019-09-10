@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
-    all: []
+    all: [],
+    itemSelecionado: []
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -10,18 +11,11 @@ export default function (state = INITIAL_STATE, action) {
                 ...state,
                 all: action.payload.data.data
             }
-        case 'ATUALIZA_NOME':
+        case 'ITEM_SELECIONADO':
+            console.log('ITEM_SELECIONADO REDUCERS: ', action.payload.item)
             return {
                 ...state,
-                all: [{
-                    id: action.payload.id,
-                    img: action.payload.nome,
-                    nome: action.payload.nome,
-                    cor: action.payload.nome,
-                    ano: action.payload.nome,
-                    fabricante: action.payload.nome,
-                    valor: action.payload.nome,
-                }]
+                itemSelecionado: action.payload.item                
             }
         default:
             return {

@@ -15,35 +15,30 @@ class Detalhe extends React.Component {
 
     constructor(props) {
         super(props);
-        this.atualizaNome = this.atualizaNome.bind(this);
-        this.atualizaId = this.atualizaId.bind(this);
     }
 
-    atualizaNome(nome) {
-        console.log('Nome: ' + nome);
-        const id = this.props.all[0].id;
-        console.log('ID: ', id);
-        this.props.atualizaNome(id, nome);
-    }
-
-    atualizaId(id) {
-        console.log('ID: ' + id);
-        const nome = this.props.all[0].nome;
-        console.log('NOME: ', nome);
-        this.props.atualizaNome(id, nome);
+    componentDidMount() {
+        console.log(`TELA DETALHE ITEM_SELECIONADO: ` + this.props.itemSelecionado.nome);
     }
 
     render() {
 
-        const carros = this.props.all.map(i => (
-            <View>
+        /*const carros = this.props.itemSelecionado.map(i => (
+            <View key={i.id}>
                 <Text>ID: {i.id} - NOME: {i.nome}</Text>
             </View>
-        ));
+        ));*/// {carros}
 
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                {carros}
+                <Text>Eu confio em você, vai lá filhãooooo.</Text>
+                <Text>{this.props.itemSelecionado.nome}</Text>
+                <Text>{this.props.itemSelecionado.id}</Text>
+                <Text>{this.props.itemSelecionado.cor}</Text>
+                <Text>{this.props.itemSelecionado.ano}</Text>
+                <Text>{this.props.itemSelecionado.img}</Text>
+                <Text>{this.props.itemSelecionado.valor}</Text>
+                <Text>{this.props.itemSelecionado.fabricante}</Text>
             </View>
         );
     }
@@ -51,12 +46,12 @@ class Detalhe extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        all: state.dataReducer.all,
+        itemSelecionado: state.dataReducer.itemSelecionado,
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ atualizaId, atualizaNome }, dispatch);
+    return bindActionCreators({}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Detalhe);                                                            

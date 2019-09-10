@@ -10,34 +10,21 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
 import axios from 'axios';
 
-import { alimentaRedux, atualizaId, atualizaNome } from './action';
+import { alimentaRedux, itemSelecionado } from './action';
 
 class Data extends React.Component {
 
     constructor(props) {
         super(props);
         this.alimentaRedux = this.alimentaRedux.bind(this);
-        this.atualizaNome = this.atualizaNome.bind(this);
-        this.atualizaId = this.atualizaId.bind(this);
     }
 
     alimentaRedux(data) {
-        console.log('Data: ' + data.data);
         this.props.alimentaRedux(data);
     }
 
-    atualizaNome(nome) {
-        console.log('Nome: ' + nome);
-        const id = this.props.all[0].id;
-        console.log('ID: ', id);
-        this.props.atualizaNome(id, nome);
-    }
-
-    atualizaId(id) {
-        console.log('ID: ' + id);
-        const nome = this.props.all[0].nome;
-        console.log('NOME: ', nome);
-        this.props.atualizaNome(id, nome);
+    itemSelecionado = (i) => {
+        this.props.itemSelecionado(i);
     }
 
     async componentDidMount() {
@@ -54,11 +41,12 @@ class Data extends React.Component {
     render() {
 
         const carros = this.props.all.map(i => (
-            <View>                
+            <View key={i.id}>
                 <Button title={i.nome} onPress={() => {
-                    this.props.navigation.navigate('Detalhe');                    
+                    this.itemSelecionado(i);
+                    this.props.navigation.navigate('Detalhe');
                 }}></Button>
-                <Text/>
+                <Text />
             </View>
         ));
 
@@ -77,7 +65,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ alimentaRedux, atualizaId, atualizaNome }, dispatch);
+    return bindActionCreators({ alimentaRedux, itemSelecionado }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Data);                                                            
