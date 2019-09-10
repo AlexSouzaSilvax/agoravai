@@ -1,22 +1,15 @@
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import React from 'react';
+import { Provider } from 'react-redux';
 
-import Home from './src/Home';
-import Detalhe from './src/Detalhe';
+import Router from './Router';
+import Store from './src/store';
 
-const AppNavigator = createStackNavigator({
-  Home: {
-    screen: Home,
-    navigationOptions: {
-      header: null
-    }
-  },
-  Detalhe: {
-    screen: Detalhe,
-    navigationOptions: {
-      title: 'Detalhe'
-    }
-  }
-});
+const App = () => {
+  return (
+    <Provider store={Store}>
+      <Router />
+    </Provider>
+  );
+};
 
-export default createAppContainer(AppNavigator);
+export default App;

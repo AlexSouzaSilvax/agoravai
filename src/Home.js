@@ -1,23 +1,83 @@
-import React, { Component } from "react";
-import { StyleSheet, Button, View } from "react-native";
-import { Provider } from 'react-redux'
-import { store } from './store';
+import React from "react";
+import {
+    View,
+    Text,
+    TextInput,
+    Button
+} from "react-native";
 
-import Data from './Data';
+import { connect } from 'react-redux'
+import { bindActionCreators } from "redux";
+import axios from 'axios';
 
-class App extends Component {
+import { alimentaRedux, atualizaId, atualizaNome } from './action';
+
+class Data extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.alimentaRedux = this.alimentaRedux.bind(this);
+        this.atualizaNome = this.atualizaNome.bind(this);
+        this.atualizaId = this.atualizaId.bind(this);
+    }
+
+    alimentaRedux(data) {
+        console.log('Data: ' + data.data);
+        this.props.alimentaRedux(data);
+    }
+
+    atualizaNome(nome) {
+        console.log('Nome: ' + nome);
+        const id = this.props.all[0].id;
+        console.log('ID: ', id);
+        this.props.atualizaNome(id, nome);
+    }
+
+    atualizaId(id) {
+        console.log('ID: ' + id);
+        const nome = this.props.all[0].nome;
+        console.log('NOME: ', nome);
+        this.props.atualizaNome(id, nome);
+    }
+
+    async componentDidMount() {
+        await axios.get('https://driver-now.herokuapp.com/carros')
+            .then((response) => {
+                console.log("Lista de carros: ", response.data)
+                this.alimentaRedux(response);
+            }).catch((err) => {
+                console.log("Erro ao listar carros: ", err)
+                console.log("Nenhum carro foi encontrado");
+            })
+    }
 
     render() {
 
+        const carros = this.props.all.map(i => (
+            <View>                
+                <Button title={i.nome} onPress={() => {
+                    this.props.navigation.navigate('Detalhe');                    
+                }}></Button>
+                <Text/>
+            </View>
+        ));
+
         return (
-            <Provider store={store}>
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Data />                    
-                </View>
-                <Button title='Tela Detalhe' onPress={() => { this.props.navigation.navigate('Detalhe') }}></Button>
-            </Provider>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                {carros}
+            </View>
         );
     }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        all: state.dataReducer.all,
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ alimentaRedux, atualizaId, atualizaNome }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Data);                                                            

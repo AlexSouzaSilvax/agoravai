@@ -17,3 +17,12 @@ export const atualizaNome = (id,nome) => {
         }
     }
 };
+
+export const buscaItem = (id) => {
+    return {
+        type: 'BUSCA_ITEM',
+        payload: {            
+            id: id            
+        }
+    }
+};
