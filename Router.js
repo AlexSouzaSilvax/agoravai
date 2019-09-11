@@ -12,10 +12,7 @@ const AppNavigator = createStackNavigator({
     }
   },
   Detalhe: {
-    screen: Detalhe,
-    navigationOptions: {
-      title: 'Detalhe'
-    }
+    screen: Detalhe
   }
 });
 

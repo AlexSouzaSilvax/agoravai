@@ -16,6 +16,11 @@ class Data extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            loading: true
+        }
+
         this.alimentaRedux = this.alimentaRedux.bind(this);
     }
 
@@ -32,6 +37,7 @@ class Data extends React.Component {
             .then((response) => {
                 console.log("Lista de carros: ", response.data)
                 this.alimentaRedux(response);
+                this.setState({ loading: false });
             }).catch((err) => {
                 console.log("Erro ao listar carros: ", err)
                 console.log("Nenhum carro foi encontrado");
@@ -44,17 +50,25 @@ class Data extends React.Component {
             <View key={i.id}>
                 <Button title={i.nome} onPress={() => {
                     this.itemSelecionado(i);
-                    this.props.navigation.navigate('Detalhe');
+                    this.props.navigation.navigate('Detalhe', { titulo: i.nome});
                 }}></Button>
                 <Text />
             </View>
         ));
 
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                {carros}
-            </View>
-        );
+        if (this.state.loading) {
+            return (
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text>Carregando...</Text>
+                </View>
+            );
+        } else {
+            return (
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    {carros}
+                </View>
+            );
+        }
     }
 }
 
